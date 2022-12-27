@@ -12,6 +12,7 @@ use svg::Node;
 
 type Canvas = svg::Document;
 
+use crate::utils::polar_point;
 use super::yantra_trait::{Config, LeafStyleDetailed, Yantra};
 
 trait SetConfig<T: CoordFloat> {
@@ -125,6 +126,23 @@ where
         self.add(leaf)
     }
 
+    /// Draw a polygon.
+    /// This also supports just unclosed polygon (if the first point doesn't equal the last point).
+    fn add_polygon(self, polygon: Vec<Point<T>>, config: Config<T>) -> Self {
+        let start = polygon[0];
+        let polygon_data = polygon[1..].into_iter()
+        .fold(
+            Data::new().move_to(start.x_y()),
+            |polygon_data, point| polygon_data.line_to(point.x_y())
+        );
+
+        // Create a polygon path using the data, and style it
+        let polygon_path = Path::new().set_config(config).set("d", polygon_data);
+
+        // Add the ngon to the yantra
+        self.add(polygon_path)
+    }
+
     fn add_regular_n_gon(
         self,
         radius: T,
@@ -152,10 +170,3 @@ where
     }
 }
 
-fn polar_point<T: CoordFloat>(radius: T, center: Point<T>, alpha: T) -> Point<T> {
-    center
-        + point!(
-            x: radius * alpha.to_radians().cos(),
-            y: radius * alpha.to_radians().sin()
-        )
-}

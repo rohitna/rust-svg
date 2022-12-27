@@ -20,6 +20,21 @@ fn test_add_circle() {
 }
 
 #[test]
+fn test_add_polygon() {
+    let view_size = 100.0;
+    let yantra: Canvas = Canvas::new().set(
+        "viewBox",
+        (-view_size, -view_size, 2.0 * view_size, 2.0 * view_size),
+    );
+    let polygon = vec![point!(x: 20.0, y: 50.0), point!(x: 20.0, y: 0.0), point!(x: 0.0, y: 50.0)];
+    // let center = point!(x: 20.0, y: 50.0);
+    // let radius = 50.0;
+    let config = Config::<T>::new(3.0, "blue".to_string(), "none".to_string());
+    let yantra = yantra.add_polygon(polygon, config);
+    svg::save("./unit_tests/yantras/add_polygon.svg", &yantra).unwrap();
+}
+
+#[test]
 fn test_add_regular_n_gon() {
     let view_size = 100.0;
     let yantra: Canvas = Canvas::new().set(
@@ -29,7 +44,7 @@ fn test_add_regular_n_gon() {
     let center = point!(x: 20.0, y: 50.0);
     let radius = 50.0;
     let config = Config::<T>::new(3.0, "blue".to_string(), "yellow".to_string());
-    let yantra = yantra.add_regular_n_gon(radius, center, 45.0, 8, config);
+    let yantra = yantra.add_regular_n_gon(radius, center, 22.50, 8, config);
     svg::save("./unit_tests/yantras/add_regular_n_gon.svg", &yantra).unwrap();
 }
 

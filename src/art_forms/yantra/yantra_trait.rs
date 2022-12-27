@@ -3,6 +3,7 @@
 
 use derive_getters::Getters;
 use derive_new::new;
+use geo::Polygon;
 use geo::point;
 use geo::prelude::*;
 use geo::Line;
@@ -53,6 +54,12 @@ where
         end: Point<T>,
         tip: Point<T>,
         leaf_style: LeafStyleDetailed<T>,
+        config: Config<T>,
+    ) -> Self;
+
+    fn add_polygon(
+        self,
+        polygon: Vec<Point<T>>,
         config: Config<T>,
     ) -> Self;
 
