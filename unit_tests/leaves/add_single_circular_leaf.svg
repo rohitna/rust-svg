@@ -1,0 +1,6 @@
+<svg viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
+<circle cx="0" cy="0" fill="yellow" r="100" stroke="blue" stroke-linejoin="round" stroke-width="3" transform="scale(1,-1)"/>
+<path d="M92.387955,38.268345 C114.561066,47.452747,113.137085,84.85281,98.99495,98.99495 C84.85281,113.137085,47.452747,114.561066,38.268345,92.387955 a100,100,0,0,0,54.11961,-54.11961" fill="yellow" stroke="blue" stroke-linejoin="round" stroke-width="3" transform="scale(1,-1)"/>
+<path d="M-38.268345,92.387955 C-47.452747,114.561066,-80.610176,80.610176,-98.99495,98.99495 C-80.610176,80.610176,-114.561066,47.452747,-92.387955,38.268345 a100,100,0,0,0,54.11961,54.11961" fill="yellow" stroke="blue" stroke-linejoin="round" stroke-width="3" transform="scale(1,-1)"/>
+<path d="M-92.387955,-38.268345 C-110.86555,-45.922012,-98.99495,-98.99495,-98.99495,-98.99495 C-98.99495,-98.99495,-45.922012,-110.86555,-38.268345,-92.387955 a100,100,0,0,0,-54.11961,54.11961" fill="yellow" stroke="blue" stroke-linejoin="round" stroke-width="3" transform="scale(1,-1)"/>
+</svg>

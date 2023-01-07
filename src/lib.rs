@@ -5,6 +5,8 @@ pub mod canvas;
 pub(crate) mod utils;
 
 pub mod prelude {
-    pub use super::art_forms::yantra::{Config, LeafStyle, Yantra};
+    pub use super::art_forms::base_shapes::{BaseShapes, Config, SetConfig};
+    pub use super::art_forms::leaves::{Leaves};
+    pub use super::art_forms::yantra::{Yantra};
     pub use super::Canvas;
 }

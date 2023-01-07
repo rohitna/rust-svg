@@ -1,0 +1,3 @@
+<svg viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M20,50 L20,0 L0,50 z" fill="none" stroke="blue" stroke-linejoin="round" stroke-width="3" transform="scale(1,-1)"/>
+</svg>
