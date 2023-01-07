@@ -1,4 +1,3 @@
-use geo::point;
 use geo::prelude::*;
 use geo::Line;
 use geo::Point;
@@ -12,7 +11,6 @@ use svg::Node;
 
 type Canvas = svg::Document;
 
-use crate::utils::polar_point;
 use super::yantra_trait::{Config, LeafStyleDetailed, Yantra};
 
 trait SetConfig<T: CoordFloat> {
@@ -36,6 +34,8 @@ macro_rules! implement_set_config(
                 .set("fill", config.fill_color.to_string())
                 .set("stroke", config.stroke_color.to_string())
                 .set("stroke-width", config.stroke_width)
+                .set("stroke-linejoin", "round")
+                .set("transform", "scale(1,-1)")
             }
         }
     );
@@ -128,45 +128,55 @@ where
 
     /// Draw a polygon.
     /// This also supports just unclosed polygon (if the first point doesn't equal the last point).
-    fn add_polygon(self, polygon: Vec<Point<T>>, config: Config<T>) -> Self {
+    fn add_line_string(
+        self,
+        polygon: Vec<Point<T>>,
+        config: Config<T>,
+        should_close: bool,
+    ) -> Self {
         let start = polygon[0];
-        let polygon_data = polygon[1..].into_iter()
-        .fold(
-            Data::new().move_to(start.x_y()),
-            |polygon_data, point| polygon_data.line_to(point.x_y())
-        );
+        let polygon_data = polygon[1..]
+            .into_iter()
+            .fold(Data::new().move_to(start.x_y()), |polygon_data, point| {
+                polygon_data.line_to(point.x_y())
+            });
 
         // Create a polygon path using the data, and style it
-        let polygon_path = Path::new().set_config(config).set("d", polygon_data);
+        let polygon_path = Path::new().set_config(config).set(
+            "d",
+            match should_close {
+                false => polygon_data,
+                true => polygon_data.close(),
+            },
+        );
 
         // Add the ngon to the yantra
         self.add(polygon_path)
     }
 
-    fn add_regular_n_gon(
-        self,
-        radius: T,
-        center: Point<T>,
-        alpha: T,
-        n: usize,
-        config: Config<T>,
-    ) -> Self {
-        assert!(n >= 3, "n gon must have at least three sides");
-        let side_span = T::from(360.0).unwrap() / T::from(n).unwrap();
-        let ngon_data = (1..=n)
-            .map(|i| alpha + T::from(i).unwrap() * side_span)
-            .fold(
-                Data::new().move_to(polar_point(radius, center, alpha).x_y()),
-                |ngon_data, cur_alpha| {
-                    ngon_data.line_to(polar_point(radius, center, cur_alpha).x_y())
-                },
-            );
+    // fn add_regular_n_gon(
+    //     self,
+    //     radius: T,
+    //     center: Point<T>,
+    //     alpha: T,
+    //     n: usize,
+    //     config: Config<T>,
+    // ) -> Self {
+    //     assert!(n >= 3, "n gon must have at least three sides");
+    //     let side_span = T::from(360.0).unwrap() / T::from(n).unwrap();
+    //     let ngon_data = (1..=n)
+    //         .map(|i| alpha + T::from(i).unwrap() * side_span)
+    //         .fold(
+    //             Data::new().move_to(polar_point(radius, center, alpha).x_y()),
+    //             |ngon_data, cur_alpha| {
+    //                 ngon_data.line_to(polar_point(radius, center, cur_alpha).x_y())
+    //             },
+    //         );
 
-        // Create a ngon using the data, and style it
-        let ngon = Path::new().set_config(config).set("d", ngon_data);
+    //     // Create a ngon using the data, and style it
+    //     let ngon = Path::new().set_config(config).set("d", ngon_data);
 
-        // Add the ngon to the yantra
-        self.add(ngon)
-    }
+    //     // Add the ngon to the yantra
+    //     self.add(ngon)
+    // }
 }
-
