@@ -12,5 +12,5 @@ where
     Self: Sized,
     T: CoordFloat,
 {
-    fn add_sri(self, radius: T, center: Point<T>, alpha: T, config: [Config<T>; 5]) -> Self;
+    fn add_sri(self, radius: T, center: Point<T>, config: [Config<T>; 9]) -> Self;
 }

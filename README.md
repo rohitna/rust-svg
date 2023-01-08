@@ -9,4 +9,4 @@ This Rust crate facilitates generation of svg art.
   ![Example](./unit_tests/leaves/add_single_circular_leaf.svg)
 - Yantras
   - yantras like [Shri Yantra](https://en.wikipedia.org/wiki/Sri_Yantra)
-  ![Example](./unit_tests/yantra/add_sri.svg)
+  ![Example](./examples/sri_yantra.svg)

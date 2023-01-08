@@ -9,9 +9,7 @@ use svg::Node;
 
 type Canvas = svg::Document;
 
-use super::base_shapes_trait::{Config, SetConfig, BaseShapes};
-
-
+use super::base_shapes_trait::{BaseShapes, Config, SetConfig};
 
 /*====== BaseShapes Implementation for canvas ============ */
 impl<T: CoordFloat> BaseShapes<T> for Canvas
